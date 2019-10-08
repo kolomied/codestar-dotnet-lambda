@@ -1,0 +1,32 @@
+{
+  "id": "${PROJECT_ID}",
+  "name": "${PROJECT_NAME}",
+  "description": "${PROJECT_DESCRIPTION}",
+  "sourceCode": [
+    {
+      "source": {
+        "s3": {
+          "bucketName": "${BUCKET_NAME}",
+          "bucketKey": "src.zip"
+        }
+      },
+      "destination": {
+        "codeCommit": {
+          "name": "${PROJECT_ID}"
+        }
+      }
+    }
+  ],
+  "toolchain": {
+    "source": {
+      "s3": {
+        "bucketName": "${BUCKET_NAME}",
+        "bucketKey": "toolchain.yml"
+      }
+    },
+    "roleArn": "${CODESTAR_ROLE_ARN}",
+    "stackParameters": {
+      "ProjectId": "${PROJECT_ID}"
+    }
+  }
+}

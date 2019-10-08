@@ -1,0 +1,25 @@
+version: 0.2 
+ 
+phases: 
+  install: 
+    runtime-versions: 
+      dotnet: 2.2
+    commands: 
+      # Upgrade AWS/SAM CLI to the latest version 
+      - pip install --upgrade awscli 
+      - pip install --upgrade aws-sam-cli
+  build: 
+    commands: 
+      # Run build and execute unit tests 
+      - dotnet test
+      # Prepare lambda binaries for deployment
+      - dotnet publish -c Release -o ../publish CoreApi/CoreApi.csproj
+      # Use AWS SAM to package the application using AWS CloudFormation 
+      # Note $S3_BUCKET variable - it is provided by CodeBuild project
+      - sam package --template-file ./publish/template.yml --output-template template-export.yml --s3-bucket $S3_BUCKET
+artifacts: 
+  type: zip 
+  files:
+    # Preserve generated CloudFormation template for subsequent deployment
+    - template-export.yml 
+ 

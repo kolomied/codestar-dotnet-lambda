@@ -72,5 +72,4 @@ is the route for our Web API controller):
 ```
 https://xxxxxxxxxx.execute-api.eu-west-1.amazonaws.com/Prod/api/values
 ```
-
 ![](doc/api-response.png)
